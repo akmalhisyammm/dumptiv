@@ -20,19 +20,19 @@ Buatlah web layouting menggunakan HTML dan CSS (boleh menggunakan CSS framework)
   - [x] Halaman Detail
     - Buatlah Halaman yang berisi detail dari Entitas Utama.
 
-- [ ] **CMS site**
-  - [ ] Halaman Login
+- [x] **CMS site**
+  - [x] Halaman Login
         Pada halaman ini buatlah sebuah form untuk menampung input email dan password user yang digunakan untuk masuk ke CMS
-  - [ ] Halaman list entitas utama . Tampilkan data entity dalam bentuk Tabel .
-  - [ ] Navbar / Sidebar yang berfungsi sebagai navigasi halaman.
-  - [ ] Halaman create entitas utama
+  - [x] Halaman list entitas utama . Tampilkan data entity dalam bentuk Tabel .
+  - [x] Navbar / Sidebar yang berfungsi sebagai navigasi halaman.
+  - [x] Halaman create entitas utama
     - Buatlah form yang berfungsi sebagai penampung input data entitas utama yang akan dibuat, sesuaikanlah input dengan dengan tipe yang sesuai. Untuk imgUrl buatlah input bertipe text saja.
-  - [ ] Halaman edit entitas utama
+  - [x] Halaman edit entitas utama
     - Buatlah form yang sama persis seperti pada halaman create dengan Judul halaman/form yang berbeda.
-  - [ ] Halaman upload image entitas utama
+  - [x] Halaman upload image entitas utama
     - Buatlah sebuah halaman yang menampilkan nama/title entitas utama + gambar (yang akan diubah), beserta sebuah input berupa select File untuk property imgUrl.
-  - [ ] Halaman list untuk entitas kedua. Tampilkan data entity dalam bentuk Tabel .
-  - [ ] Halaman register staff
+  - [x] Halaman list untuk entitas kedua. Tampilkan data entity dalam bentuk Tabel .
+  - [x] Halaman register staff
     - Pada halaman ini buatlah sebuah form untuk menampung input semua data user yang akan didaftarkan oleh admin.
 
 ## W2D2
@@ -41,20 +41,20 @@ Buatlah web layouting menggunakan HTML dan CSS (boleh menggunakan CSS framework)
 
 Convert layout atau slicing template yang sudah dibuat ke dalam React.js:
 
-- [ ] Coba buat React pada project hasil generate Vite
-- [ ] Public site
+- [x] Coba buat React pada project hasil generate Vite
+- [x] Public site
 
-  - [ ] Halaman Home/Landing Page
-  - [ ] Halaman Detail (Public)
+  - [x] Halaman Home/Landing Page
+  - [x] Halaman Detail (Public)
 
-- [ ] CMS site
-  - [ ] Halaman Login
-  - [ ] Halaman list entitas utama
-  - [ ] Halaman create entitas utama
-  - [ ] Halaman edit entitas utama
-  - [ ] Halaman upload image entitas utama
-  - [ ] Halaman list untuk entitas kedua
-  - [ ] Halaman register staff
+- [x] CMS site
+  - [x] Halaman Login
+  - [x] Halaman list entitas utama
+  - [x] Halaman create entitas utama
+  - [x] Halaman edit entitas utama
+  - [x] Halaman upload image entitas utama
+  - [x] Halaman list untuk entitas kedua
+  - [x] Halaman register staff
 
 ## W2D3
 
