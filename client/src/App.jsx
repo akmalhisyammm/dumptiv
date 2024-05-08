@@ -1,19 +1,9 @@
-import { Footer, Navbar } from './components/organisms';
-import { DetailPage, HomePage } from './components/templates';
+import { RouterProvider } from 'react-router-dom';
+
+import router from './routes';
 
 const App = () => {
-  return (
-    <>
-      <Navbar />
-
-      <main>
-        <HomePage />
-        <DetailPage />
-      </main>
-
-      <Footer />
-    </>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

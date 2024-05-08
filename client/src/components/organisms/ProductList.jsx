@@ -1,9 +1,53 @@
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
+
+import { API_URL } from '../../constants/url';
 import { ProductCard } from '../molecules';
 
 const ProductList = () => {
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [pagination, setPagination] = useState({});
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const productsUrl = new URL(`${API_URL}/products`);
+        const categoriesUrl = new URL(`${API_URL}/categories`);
+
+        searchParams.get('q')
+          ? productsUrl.searchParams.append('q', searchParams.get('q'))
+          : productsUrl.searchParams.delete('q');
+        searchParams.get('i')
+          ? productsUrl.searchParams.append('i', searchParams.get('i'))
+          : productsUrl.searchParams.delete('i');
+        searchParams.get('sort')
+          ? productsUrl.searchParams.append('sort', searchParams.get('sort'))
+          : productsUrl.searchParams.delete('sort');
+        searchParams.get('page')
+          ? productsUrl.searchParams.append('page', searchParams.get('page'))
+          : productsUrl.searchParams.delete('page');
+
+        const { data: products } = await axios.get(productsUrl);
+        const { data: categories } = await axios.get(categoriesUrl);
+
+        setProducts(products.data.query);
+        setCategories(categories.data);
+        setPagination(products.data.pagination);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProducts();
+  }, [searchParams]);
+
   return (
-    <section className="flex flex-col max-w-screen-xl gap-4 p-4 mx-auto">
-      <div className="flex gap-2">
+    <section className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2 md:flex-row">
         <label className="flex items-center w-full gap-2 input input-bordered">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -17,68 +61,62 @@ const ProductList = () => {
               clipRule="evenodd"
             />
           </svg>
-          <input type="text" className="grow" placeholder="Search" />
+          <input
+            type="text"
+            className="grow"
+            placeholder="Search"
+            onChange={(e) =>
+              setSearchParams({ ...Object.fromEntries(searchParams), q: e.target.value })
+            }
+          />
         </label>
-        <button className="btn btn-square">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        <div className="flex gap-2 min-w-96">
+          <select
+            className="w-full select select-bordered"
+            defaultValue=""
+            onChange={(e) =>
+              setSearchParams({ ...Object.fromEntries(searchParams), i: e.target.value })
+            }
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-        <button className="btn btn-square">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+            <option value="">Select category</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+          <select
+            className="w-full select select-bordered"
+            defaultValue=""
+            onChange={(e) =>
+              setSearchParams({ ...Object.fromEntries(searchParams), sort: e.target.value })
+            }
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
+            <option value="">Sort by</option>
+            <option value="DESC">Latest</option>
+            <option value="ASC">Oldest</option>
+          </select>
+        </div>
       </div>
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        <ProductCard
-          title="iPhone 15 Pro"
-          description="Titanium. So strong. So light. So Pro"
-          imgUrl="https://cdn.eraspace.com/media/catalog/product/m/a/macbook_pro_16-inch_m3_pro_max_space_black_1_5.jpg"
-        />
-        <ProductCard
-          title="iPhone 15 Pro"
-          description="Titanium. So strong. So light. So Pro"
-          imgUrl="https://cdn.eraspace.com/media/catalog/product/m/a/macbook_pro_16-inch_m3_pro_max_space_black_1_5.jpg"
-        />
-        <ProductCard
-          title="iPhone 15 Pro"
-          description="Titanium. So strong. So light. So Pro"
-          imgUrl="https://cdn.eraspace.com/media/catalog/product/m/a/macbook_pro_16-inch_m3_pro_max_space_black_1_5.jpg"
-        />
-        <ProductCard
-          title="iPhone 15 Pro"
-          description="Titanium. So strong. So light. So Pro"
-          imgUrl="https://cdn.eraspace.com/media/catalog/product/m/a/macbook_pro_16-inch_m3_pro_max_space_black_1_5.jpg"
-        />
+        {products.map((product) => (
+          <ProductCard key={product.id} {...product} />
+        ))}
       </div>
+
       <div className="mx-auto join">
-        <button className="join-item btn">1</button>
-        <button className="join-item btn btn-active">2</button>
-        <button className="join-item btn">3</button>
-        <button className="join-item btn">4</button>
+        {[...Array(pagination.totalPage)].map((_, index) => (
+          <button
+            key={index}
+            className={`join-item btn ${pagination.currentPage === index + 1 && 'btn-active'}`}
+            onClick={() =>
+              setSearchParams({ ...Object.fromEntries(searchParams), page: index + 1 })
+            }
+          >
+            {index + 1}
+          </button>
+        ))}
       </div>
     </section>
   );

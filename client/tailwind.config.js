@@ -1,4 +1,4 @@
-import daisyui from 'daisyui';
+/* eslint-disable no-undef */
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -6,5 +6,8 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [daisyui],
+  plugins: [require('@tailwindcss/typography'), require('daisyui')],
+  daisyui: {
+    themes: ['light', 'dark'],
+  },
 };
