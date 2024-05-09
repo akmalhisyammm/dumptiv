@@ -1,10 +1,11 @@
-const Button = ({ children, type, mode, ...rest }) => {
+const Button = ({ children, type, accent, onClick, ...rest }) => {
   return (
     <button
-      type={type}
+      type={type || 'button'}
       className={`btn btn-lg ${
-        mode === 'secondary' ? 'btn-light' : 'btn-primary'
+        accent === 'secondary' ? 'btn-light' : 'btn-primary'
       } rounded-pill w-100 p-2`}
+      onClick={onClick}
       {...rest}
     >
       {children}

@@ -1,6 +1,12 @@
-import { LoginForm } from '../organisms';
+import { useEffect } from 'react';
 
-const LoginPage = () => {
+import { LoginForm } from '../components/organisms';
+
+const Login = () => {
+  useEffect(() => {
+    document.title = 'Login | DumpTiv CMS';
+  }, []);
+
   return (
     <section className="container" id="login-section">
       <div className="row">
@@ -32,4 +38,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;

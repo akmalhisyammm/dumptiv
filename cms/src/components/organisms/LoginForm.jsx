@@ -1,8 +1,30 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import { Button } from '../atoms';
+import { AUTH_API_URL } from '../../constants/url';
 
 const LoginForm = () => {
+  const [form, setForm] = useState({ email: '', password: '' });
+
+  const navigate = useNavigate();
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await axios.post(`${AUTH_API_URL}/login`, form);
+
+      localStorage.setItem('token', data.data.access_token);
+      navigate('/products');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <form id="login-form">
+    <form id="login-form" onSubmit={handleFormSubmit}>
       <h1 className="mb-3 h3 display-1">Log in to your account</h1>
       <span>
         Log in on your profile to autocomplete your purchase order with your personal data.
@@ -19,6 +41,8 @@ const LoginForm = () => {
           placeholder="Enter email address ..."
           autoComplete="off"
           required
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
       </div>
       <div className="mb-4">
@@ -33,6 +57,8 @@ const LoginForm = () => {
           placeholder="Enter your password ..."
           autoComplete="off"
           required
+          value={form.password}
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
       </div>
       <div className="mb-3 checkbox">

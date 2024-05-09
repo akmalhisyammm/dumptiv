@@ -1,6 +1,12 @@
-import { RegisterForm } from '../organisms';
+import { useEffect } from 'react';
 
-const AddStaffPage = () => {
+import { RegisterForm } from '../components/organisms';
+
+const AddStaff = () => {
+  useEffect(() => {
+    document.title = 'Add Staff | DumpTiv CMS';
+  }, []);
+
   return (
     <section className="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="new-user-section">
       <div className="row">
@@ -14,4 +20,4 @@ const AddStaffPage = () => {
   );
 };
 
-export default AddStaffPage;
+export default AddStaff;
