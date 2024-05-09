@@ -64,20 +64,20 @@ Integrasikan Halaman Web dengan server yang sudah kalian buat pada Challenge/Pro
 
 Pastikan setiap pergantian tampilan terjadi secara reaktif dengan tidak me-refresh web browser mu. Pasca login berhasil, user akan dinavigasikan ke tampilan home/list.
 
-- [ ] Public site
+- [x] Public site
 
-  - [ ] GET data entitas utama pada halaman Home/Landing Page (include: pagination, filter dan sort)
-  - [ ] GET data detail entitas utama pada halaman Detail
+  - [x] GET data entitas utama pada halaman Home/Landing Page (include: pagination, filter dan sort)
+  - [x] GET data detail entitas utama pada halaman Detail
 
-- [ ] CMS site
-  - [ ] POST pada halaman Login
-  - [ ] GET data entitas utama pada halaman list entitas utama (include: pagination, filter dan sort)
-  - [ ] POST pada halaman create entitas utama
-  - [ ] PUT pada halaman edit entitas utama
-  - [ ] DELETE untuk menghapus entitas utama
-  - [ ] PATCH untuk mengupload image / mengupdate imgUrl entitas utama
-  - [ ] GET data entitas kedua pada Halaman list entitas kedua
-  - [ ] POST pada Halaman register staff
+- [x] CMS site
+  - [x] POST pada halaman Login
+  - [x] GET data entitas utama pada halaman list entitas utama (include: pagination, filter dan sort)
+  - [x] POST pada halaman create entitas utama
+  - [x] PUT pada halaman edit entitas utama
+  - [x] DELETE untuk menghapus entitas utama
+  - [x] PATCH untuk mengupload image / mengupdate imgUrl entitas utama
+  - [x] GET data entitas kedua pada Halaman list entitas kedua
+  - [x] POST pada Halaman register staff
 
 ## W2D4
 
@@ -85,17 +85,17 @@ Pastikan setiap pergantian tampilan terjadi secara reaktif dengan tidak me-refre
 
 Project web-client kalian akan terdiri dari beberapa page/route. Silahkan Implementasikan routing pada project web-client kalian:
 
-- [ ] Public site
-  - [ ] Halaman Home/Landing Page
-  - [ ] Halaman Detail
-- [ ] CMS site
-  - [ ] Halaman Login
-  - [ ] Halaman list entitas utama
-  - [ ] Halaman create entitas utama (boleh menggunakan modal)
-  - [ ] Halaman edit entitas utama (boleh menggunakan modal)
-  - [ ] Halaman upload image untuk entitas utama (boleh menggunakan modal)
-  - [ ] Halaman list untuk entitas kedua
-  - [ ] Halaman register staff
+- [x] Public site
+  - [x] Halaman Home/Landing Page
+  - [x] Halaman Detail
+- [x] CMS site
+  - [x] Halaman Login
+  - [x] Halaman list entitas utama
+  - [x] Halaman create entitas utama (boleh menggunakan modal)
+  - [x] Halaman edit entitas utama (boleh menggunakan modal)
+  - [x] Halaman upload image untuk entitas utama (boleh menggunakan modal)
+  - [x] Halaman list untuk entitas kedua
+  - [x] Halaman register staff
 
 ### Deploy Client
 
