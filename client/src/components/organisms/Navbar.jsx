@@ -20,7 +20,8 @@ const Navbar = () => {
       <div className="max-w-screen-xl mx-auto navbar">
         <div className="navbar-start">
           <a className="text-xl btn btn-ghost" onClick={() => navigate('/')}>
-            DumpTiv
+            <img src="/dumptiv.png" alt="Dumptiv" width={30} />
+            Dumptiv
           </a>
         </div>
 

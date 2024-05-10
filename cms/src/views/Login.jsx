@@ -4,7 +4,7 @@ import { LoginForm } from '../components/organisms';
 
 const Login = () => {
   useEffect(() => {
-    document.title = 'Login | DumpTiv CMS';
+    document.title = 'Login | Dumptiv CMS';
   }, []);
 
   return (
@@ -14,7 +14,7 @@ const Login = () => {
           <h1 className="mt-5 mb-3">Login Options</h1>
           <span>
             Log in and autocomplete your order with your personal data, or sign up to enjoy all the
-            benefits of an IDEA account.
+            benefits of a Dumptiv account.
           </span>
         </div>
         <div className="my-5 col-12 col-lg-8 offset-lg-2">

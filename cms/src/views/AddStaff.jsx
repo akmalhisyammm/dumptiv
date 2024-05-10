@@ -4,7 +4,7 @@ import { RegisterForm } from '../components/organisms';
 
 const AddStaff = () => {
   useEffect(() => {
-    document.title = 'Add Staff | DumpTiv CMS';
+    document.title = 'Add Staff | Dumptiv CMS';
   }, []);
 
   return (

@@ -7,7 +7,7 @@ const Products = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = 'Products | DumpTiv CMS';
+    document.title = 'Products | Dumptiv CMS';
   }, []);
 
   return (

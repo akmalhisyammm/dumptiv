@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import { ProductForm } from '../components/organisms';
@@ -7,6 +8,7 @@ import { BASE_API_URL } from '../constants/url';
 
 const EditProduct = () => {
   const [product, setProduct] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { id } = useParams();
 
@@ -15,6 +17,8 @@ const EditProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+        setIsLoading(true);
+
         const { data } = await axios.get(`${BASE_API_URL}/products/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -23,12 +27,14 @@ const EditProduct = () => {
 
         setProduct(data.data);
       } catch (error) {
-        console.error(error);
+        toast.error(error.response.data.error, { position: 'bottom-right' });
 
         if (error.response.data.statusCode === 500) {
           localStorage.removeItem('token');
           navigate('/login');
         }
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -36,7 +42,7 @@ const EditProduct = () => {
   }, [id, navigate]);
 
   useEffect(() => {
-    document.title = `Edit Product ${product?.id || ''} | DumpTiv CMS`;
+    document.title = `Edit Product ${product?.id || ''} | Dumptiv CMS`;
   }, [product?.id]);
 
   return (
@@ -45,7 +51,13 @@ const EditProduct = () => {
         <h1 className="display-2">Update Product</h1>
       </div>
       <div className="row">
-        <div className="col-12 col-md-6">{product ? <ProductForm {...product} /> : null}</div>
+        <div className="col-12 col-md-6">
+          {product && !isLoading ? (
+            <ProductForm {...product} />
+          ) : (
+            <img src="/happy-pikachu.gif" alt="Loading" width={120} />
+          )}
+        </div>
       </div>
     </section>
   );

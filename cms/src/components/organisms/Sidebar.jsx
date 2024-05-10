@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Sidebar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    toast.success('Successfully logged out', { position: 'bottom-right' });
     navigate('/login');
   };
 
@@ -13,20 +15,20 @@ const Sidebar = () => {
       <div className="pt-3 position-sticky">
         <ul className="nav flex-column">
           <li className="nav-item">
-            <Link to="/products" className="nav-link" id="nav-product">
+            <Link role="button" to="/products" className="nav-link" id="nav-product">
               {' '}
               <span className="icon material-symbols-outlined me-2">shopping_bag</span>
               Products
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/categories" className="nav-link" id="nav-category">
+            <Link role="button" to="/categories" className="nav-link" id="nav-category">
               {' '}
               <span className="icon material-symbols-outlined me-2">category</span>Categories
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/users/add" className="nav-link" id="nav-category">
+            <Link role="button" to="/users/add" className="nav-link" id="nav-category">
               {' '}
               <span className="icon material-symbols-outlined me-2">account_circle</span>Add User
             </Link>
@@ -37,14 +39,14 @@ const Sidebar = () => {
         </h6>
         <ul className="mb-2 nav flex-column">
           {/* <li className="nav-item">
-            <Link to="#" className="nav-link">
+            <Link role="button" to="#" className="nav-link">
               {' '}
               <span className="icon material-symbols-outlined me-2">person</span>Hej,{' '}
               <span id="username">Hacktiv8!</span>
             </Link>
           </li> */}
           <li className="nav-item">
-            <a className="nav-link" id="nav-logout" onClick={handleLogout}>
+            <a role="button" className="nav-link" id="nav-logout" onClick={handleLogout}>
               {' '}
               <span className="icon material-symbols-outlined me-2">logout</span>Logout
             </a>

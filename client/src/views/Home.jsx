@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import { API_URL } from '../constants/url';
@@ -8,7 +9,8 @@ import { ProductList } from '../components/organisms';
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [pagination, setPagination] = useState({});
+  const [pagination, setPagination] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -20,6 +22,8 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setIsLoading(true);
+
         const { data: products } = await axios.get(
           `${API_URL}/products?q=${q}&i=${i}&sort=${sort}&page=${page}`
         );
@@ -29,7 +33,9 @@ const Home = () => {
         setCategories(categories.data);
         setPagination(products.data.pagination);
       } catch (error) {
-        console.error(error);
+        toast.error(error.response.data.error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -37,7 +43,7 @@ const Home = () => {
   }, [q, i, sort, page]);
 
   useEffect(() => {
-    document.title = 'Home | DumpTiv';
+    document.title = 'Home | Dumptiv';
   }, []);
 
   return (
@@ -66,7 +72,7 @@ const Home = () => {
             }
           />
         </label>
-        <div className="flex gap-2 min-w-96">
+        <div className="flex flex-col gap-2 sm:flex-row min-w-fit sm:min-w-96">
           <select
             className="w-full select select-bordered"
             value={i}
@@ -74,7 +80,7 @@ const Home = () => {
               setSearchParams({ ...Object.fromEntries(searchParams), i: e.target.value })
             }
           >
-            <option value="">Select category</option>
+            <option value="">All category</option>
             {categories.map((category) => (
               <option key={category.id} value={category.name}>
                 {category.name}
@@ -88,17 +94,23 @@ const Home = () => {
               setSearchParams({ ...Object.fromEntries(searchParams), sort: e.target.value })
             }
           >
-            <option value="">Sort by</option>
             <option value="DESC">Latest</option>
             <option value="ASC">Oldest</option>
           </select>
         </div>
       </div>
 
-      {products.length ? <ProductList data={products} /> : null}
+      {products.length || isLoading ? (
+        <ProductList data={products} isLoading={isLoading} />
+      ) : (
+        <div>
+          <img src="/angry-pikachu.gif" alt="404" width={200} className="mx-auto" />
+          <p className="font-bold text-center">No products found</p>
+        </div>
+      )}
 
       <div className="mx-auto join">
-        {[...Array(pagination.totalPage)].map((_, index) => (
+        {[...Array(pagination?.totalPage || 0)].map((_, index) => (
           <button
             key={index}
             className={`join-item btn ${pagination.currentPage === index + 1 && 'btn-active'}`}

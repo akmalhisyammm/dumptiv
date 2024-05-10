@@ -6,7 +6,7 @@ const ProductCard = ({ id, name, description, imgUrl }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="shadow-xl card bg-base-100 image-full h-72">
+    <article className="shadow-xl card bg-base-100 image-full h-72">
       <figure>
         <Image src={imgUrl} alt={name} className="w-full" />
       </figure>
@@ -19,7 +19,7 @@ const ProductCard = ({ id, name, description, imgUrl }) => {
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

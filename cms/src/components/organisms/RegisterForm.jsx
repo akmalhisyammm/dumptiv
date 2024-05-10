@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import { Button } from '../atoms';
@@ -13,17 +14,23 @@ const RegisterForm = () => {
     phoneNumber: '',
     address: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
     try {
+      setIsLoading(true);
+
       await axios.post(`${AUTH_API_URL}/add-user`, form, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
 
+      toast.success('Successfully added new staff', { position: 'bottom-right' });
       setForm({
         username: '',
         email: '',
@@ -32,14 +39,18 @@ const RegisterForm = () => {
         address: '',
       });
     } catch (error) {
-      console.error(error);
+      toast.error(error.response.data.error, { position: 'bottom-right' });
 
       if (error.response.data.statusCode === 500) {
         localStorage.removeItem('token');
         navigate('/login');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) return <img src="/happy-pikachu.gif" alt="Loading" width={120} />;
 
   return (
     <form id="register-form" onSubmit={handleFormSubmit}>

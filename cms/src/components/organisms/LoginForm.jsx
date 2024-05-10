@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import { Button } from '../atoms';
@@ -7,6 +8,7 @@ import { AUTH_API_URL } from '../../constants/url';
 
 const LoginForm = () => {
   const [form, setForm] = useState({ email: '', password: '' });
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -14,14 +16,21 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
+
       const { data } = await axios.post(`${AUTH_API_URL}/login`, form);
 
       localStorage.setItem('token', data.data.access_token);
+      toast.success('Successfully logged in', { position: 'bottom-right' });
       navigate('/products');
     } catch (error) {
-      console.error(error);
+      toast.error(error.response.data.error, { position: 'bottom-right' });
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) return <img src="/happy-pikachu.gif" alt="Loading" width={120} />;
 
   return (
     <form id="login-form" onSubmit={handleFormSubmit}>

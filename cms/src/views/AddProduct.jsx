@@ -4,7 +4,7 @@ import { ProductForm } from '../components/organisms';
 
 const AddProduct = () => {
   useEffect(() => {
-    document.title = 'Add Product | DumpTiv CMS';
+    document.title = 'Add Product | Dumptiv CMS';
   }, []);
 
   return (

@@ -1,4 +1,5 @@
 import { createBrowserRouter, redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { BaseLayout } from '../components/templates';
 import Login from '../views/Login';
@@ -12,16 +13,34 @@ import AddStaff from '../views/AddStaff';
 const router = createBrowserRouter([
   {
     path: '/',
-    loader: () => (localStorage.getItem('token') ? redirect('/products') : redirect('/login')),
+    loader: () => {
+      if (!localStorage.getItem('token')) {
+        toast.error('Please login first', { position: 'bottom-right' });
+        return redirect('/login');
+      }
+      return redirect('/products');
+    },
   },
   {
     path: '/login',
     element: <Login />,
-    loader: () => (localStorage.getItem('token') ? redirect('/products') : null),
+    loader: () => {
+      if (localStorage.getItem('token')) {
+        toast.error('You already logged in', { position: 'bottom-right' });
+        return redirect('/products');
+      }
+      return null;
+    },
   },
   {
     element: <BaseLayout />,
-    loader: () => (localStorage.getItem('token') ? null : redirect('/login')),
+    loader: () => {
+      if (!localStorage.getItem('token')) {
+        toast.error('Please login first', { position: 'bottom-right' });
+        return redirect('/login');
+      }
+      return null;
+    },
     children: [
       {
         path: '/products',

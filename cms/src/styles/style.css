@@ -4,7 +4,7 @@
  * Copyright 2022 Ziady Mubaraq
  * MIT License
  */
-@font-face {
+/* @font-face {
   font-family: 'NotoIKEA';
   src: url(https://www.ikea.co.id/webroot/fonts/NotoIKEALatin/NotoIKEALatin-Regular.woff2)
       format('woff2'),
@@ -44,7 +44,7 @@
   font-weight: bold;
   font-style: italic;
   font-display: swap;
-}
+} */
 
 ::selection {
   background: #407ab1;

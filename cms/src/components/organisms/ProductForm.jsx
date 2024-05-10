@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import { Button } from '../atoms';
@@ -15,6 +16,7 @@ const ProductForm = ({ id, name, categoryId, description, stock, price, imgUrl }
     price: price || 0,
     imgUrl: imgUrl || '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,28 +24,34 @@ const ProductForm = ({ id, name, categoryId, description, stock, price, imgUrl }
     e.preventDefault();
 
     try {
+      setIsLoading(true);
+
       if (id) {
         await axios.put(`${BASE_API_URL}/products/${id}`, form, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
+        toast.success('Successfully updated product', { position: 'bottom-right' });
       } else {
         await axios.post(`${BASE_API_URL}/products`, form, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
+        toast.success('Successfully added new product', { position: 'bottom-right' });
       }
 
       navigate('/products');
     } catch (error) {
-      console.error(error);
+      toast.error(error.response.data.error, { position: 'bottom-right' });
 
       if (error.response.data.statusCode === 500) {
         localStorage.removeItem('token');
         navigate('/login');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -58,7 +66,7 @@ const ProductForm = ({ id, name, categoryId, description, stock, price, imgUrl }
 
         setCategories(data.data);
       } catch (error) {
-        console.error(error);
+        toast.error(error.response.data.error, { position: 'bottom-right' });
 
         if (error.response.data.statusCode === 500) {
           localStorage.removeItem('token');
@@ -69,6 +77,8 @@ const ProductForm = ({ id, name, categoryId, description, stock, price, imgUrl }
 
     fetchCategories();
   }, [navigate]);
+
+  if (isLoading) return <img src="/happy-pikachu.gif" alt="Loading" width={120} />;
 
   return (
     <form id="product-form" onSubmit={handleFormSubmit}>

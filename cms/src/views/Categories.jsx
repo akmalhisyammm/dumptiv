@@ -4,7 +4,7 @@ import { CategoryTable } from '../components/organisms';
 
 const Categories = () => {
   useEffect(() => {
-    document.title = 'Categories | DumpTiv CMS';
+    document.title = 'Categories | Dumptiv CMS';
   }, []);
 
   return (
