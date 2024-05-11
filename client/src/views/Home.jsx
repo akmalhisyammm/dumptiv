@@ -17,7 +17,11 @@ const Home = () => {
   const q = searchParams.get('q') || '';
   const i = searchParams.get('i') || '';
   const sort = searchParams.get('sort') || 'DESC';
+  const limit = searchParams.get('limit') || 10;
   const page = searchParams.get('page') || 1;
+
+  const firstIndex = (pagination?.currentPage - 1) * limit + 1;
+  const lastIndex = (pagination?.currentPage - 1) * limit + products.length;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,7 +29,7 @@ const Home = () => {
         setIsLoading(true);
 
         const { data: products } = await axios.get(
-          `${API_URL}/products?q=${q}&i=${i}&sort=${sort}&page=${page}`
+          `${API_URL}/products?q=${q}&i=${i}&sort=${sort}&limit=${limit}&page=${page}`
         );
         const { data: categories } = await axios.get(`${API_URL}/categories`);
 
@@ -40,7 +44,7 @@ const Home = () => {
     };
 
     fetchProducts();
-  }, [q, i, sort, page]);
+  }, [q, i, sort, limit, page]);
 
   useEffect(() => {
     document.title = 'Home | Dumptiv';
@@ -101,27 +105,52 @@ const Home = () => {
       </div>
 
       {products.length || isLoading ? (
-        <ProductList data={products} isLoading={isLoading} />
+        <ProductList data={products} maxLength={limit} isLoading={isLoading} />
       ) : (
         <div>
-          <img src="/angry-pikachu.gif" alt="404" width={200} className="mx-auto" />
+          <img src="/angry-pikachu.gif" alt="Not Found" width={200} className="mx-auto" />
           <p className="font-bold text-center">No products found</p>
         </div>
       )}
 
-      <div className="mx-auto join">
-        {[...Array(pagination?.totalPage || 0)].map((_, index) => (
-          <button
-            key={index}
-            className={`join-item btn ${pagination.currentPage === index + 1 && 'btn-active'}`}
-            onClick={() =>
-              setSearchParams({ ...Object.fromEntries(searchParams), page: index + 1 })
-            }
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
+      {pagination && products.length ? (
+        <div className="flex flex-col items-center gap-2 my-2">
+          <small>
+            Showing <b>{firstIndex}</b> to <b>{lastIndex}</b> of <b>{pagination.totalRows}</b>{' '}
+            Entries
+          </small>
+          <div className="flex justify-center gap-2">
+            <div className="join">
+              {[...Array(pagination.totalPage || 0)].map((_, index) => (
+                <button
+                  key={index}
+                  className={`join-item btn ${
+                    pagination.currentPage === index + 1 && 'btn-active'
+                  }`}
+                  onClick={() =>
+                    setSearchParams({ ...Object.fromEntries(searchParams), page: index + 1 })
+                  }
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+            <select
+              className="select select-bordered"
+              value={limit}
+              onChange={(e) =>
+                setSearchParams({ ...Object.fromEntries(searchParams), limit: e.target.value })
+              }
+            >
+              {[...Array(9)].map((_, index) => (
+                <option key={index} value={index + 4}>
+                  {index + 4}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 };
