@@ -101,4 +101,4 @@ Project web-client kalian akan terdiri dari beberapa page/route. Silahkan Implem
 
 Coba lakukan deployment untuk client (bisa coba deploy hal sederhana terlebih dahulu seperti halaman yang menampilkan ‘hello world’) menggunakan Firebase
 
-- [ ] Deploy client
+- [x] Deploy client
