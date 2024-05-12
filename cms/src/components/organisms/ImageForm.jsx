@@ -43,7 +43,7 @@ const ImageForm = ({ id }) => {
     }
   };
 
-  if (isLoading) return <img src="/" alt="Loading" width={120} />;
+  if (isLoading) return <img src="/happy-pikachu.gif" alt="Loading" width={120} />;
 
   return (
     <form id="register-form" onSubmit={handleFormSubmit}>
